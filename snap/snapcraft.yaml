@@ -1,0 +1,92 @@
+name: rovar
+base: core26
+version: '0.3.0'
+title: Rovar
+icon: snap/gui/rovar.png
+summary: A native design editor for interfaces and interactive prototypes
+description: |
+  Rovar is a canvas design editor with artboards, vectors, text, images,
+  audio and video, reusable components, auto layout and interactive prototypes.
+  Export PNG, SVG and Rovar documents, work locally or connect to a workspace
+  server, and let AI agents edit designs through the bundled local CLI.
+license: MIT
+grade: stable
+confinement: strict
+website: https://github.com/cradiy/rovar
+source-code:
+  - https://github.com/cradiy/rovar
+  - https://github.com/sidalit/rovar-snap
+issues:
+  - https://github.com/cradiy/rovar/issues
+  - https://github.com/sidalit/rovar-snap/issues
+contact: https://github.com/sidalit/rovar-snap/issues
+
+platforms:
+  amd64:
+  arm64:
+
+apps:
+  rovar:
+    command: bin/rovar-launch
+    extensions: [gnome]
+    plugs:
+      - audio-playback
+      - home
+      - network
+      - network-bind
+      - removable-media
+
+parts:
+  rovar:
+    plugin: rust
+    source: https://github.com/cradiy/rovar.git
+    source-tag: v$SNAPCRAFT_PROJECT_VERSION
+    source-depth: 1
+    rust-channel: '1.98.1'
+    rust-path: [crates/rovar]
+    build-packages:
+      - build-essential
+      - clang
+      - cmake
+      - pkg-config
+      - libssl-dev
+      - libasound2-dev
+      - libfontconfig-dev
+      - libfreetype-dev
+      - libwayland-dev
+      - libxkbcommon-dev
+      - libxkbcommon-x11-dev
+      - libx11-xcb-dev
+      - libxcb-shape0-dev
+      - libxcb-xfixes0-dev
+      - libxcb-randr0-dev
+      - libxcb-xkb-dev
+      - libvulkan-dev
+      - libudev-dev
+      - libdbus-1-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+    stage-packages:
+      - libxkbcommon-x11-0
+    override-pull: |
+      craftctl default
+      sed -i 's/app_id: Some("rovar".into())/app_id: Some("rovar_rovar".into())/' \
+        crates/rovar/src/app/startup.rs
+    override-build: |
+      craftctl default
+      install -Dm755 "$CRAFT_PROJECT_DIR/snap/local/rovar-launch" \
+        "$CRAFT_PART_INSTALL/bin/rovar-launch"
+      install -Dm644 "$CRAFT_PROJECT_DIR/snap/local/asound.conf" \
+        "$CRAFT_PART_INSTALL/etc/alsa/alsa.conf"
+      install -Dm644 "$CRAFT_PROJECT_DIR/snap/gui/rovar.png" \
+        "$CRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/rovar_rovar.png"
+      install -Dm644 skills/rovar-design/SKILL.md \
+        "$CRAFT_PART_INSTALL/usr/share/rovar/skills/rovar-design/SKILL.md"
+      install -Dm644 LICENSE "$CRAFT_PART_INSTALL/usr/share/doc/rovar/LICENSE"
+
+  media-codecs:
+    plugin: nil
+    stage-packages:
+      - libasound2-plugins
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-libav

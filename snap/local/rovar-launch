@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+export ALSA_CONFIG_PATH="$SNAP/etc/alsa/alsa.conf"
+for plugin in "$SNAP"/usr/lib/*/alsa-lib/libasound_module_pcm_pulse.so; do
+    if [ -f "$plugin" ]; then
+        export ALSA_PLUGIN_DIR="${plugin%/*}"
+        break
+    fi
+done
+
+exec "$SNAP/bin/rovar" "$@"

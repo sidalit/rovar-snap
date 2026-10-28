@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Rovar
+GenericName=Design Editor
+Comment=Create and edit designs on a flexible canvas
+Exec=rovar
+Icon=${SNAP}/meta/gui/rovar.png
+Terminal=false
+Categories=Graphics;2DGraphics;VectorGraphics;
+Keywords=design;vector;canvas;graphics;
+StartupNotify=true
+StartupWMClass=rovar_rovar
