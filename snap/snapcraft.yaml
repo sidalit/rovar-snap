@@ -68,10 +68,6 @@ parts:
       - libgstreamer-plugins-base1.0-dev
     stage-packages:
       - libxkbcommon-x11-0
-    override-pull: |
-      craftctl default
-      sed -i 's/app_id: Some("rovar".into())/app_id: Some("rovar_rovar".into())/' \
-        crates/rovar/src/app/startup.rs
     override-build: |
       craftctl default
       install -Dm755 "$CRAFT_PROJECT_DIR/snap/local/rovar-launch" \
@@ -79,7 +75,7 @@ parts:
       install -Dm644 "$CRAFT_PROJECT_DIR/snap/local/asound.conf" \
         "$CRAFT_PART_INSTALL/etc/alsa/alsa.conf"
       install -Dm644 "$CRAFT_PROJECT_DIR/snap/gui/rovar.png" \
-        "$CRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/rovar_rovar.png"
+        "$CRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/rovar.png"
       install -Dm644 skills/rovar-design/SKILL.md \
         "$CRAFT_PART_INSTALL/usr/share/rovar/skills/rovar-design/SKILL.md"
       install -Dm644 LICENSE "$CRAFT_PART_INSTALL/usr/share/doc/rovar/LICENSE"

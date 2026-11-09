@@ -9,4 +9,4 @@ Terminal=false
 Categories=Graphics;2DGraphics;VectorGraphics;
 Keywords=design;vector;canvas;graphics;
 StartupNotify=true
-StartupWMClass=rovar_rovar
+StartupWMClass=rovar
