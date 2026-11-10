@@ -22,4 +22,4 @@ SOFTWARE.
 
 This license covers only the snap packaging files in this repository.
 rovar, its dependencies and the base snap keep their own licenses.
-The upstream rovar icon and upstream code in patches are not covered by this packaging license.
+The upstream rovar icon is not covered by this packaging license.
